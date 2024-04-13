@@ -1,0 +1,53 @@
+/* styles.css */
+body, html {
+    margin-top: 80px;
+    font-family: Arial, sans-serif;
+  }
+
+.trip-planner {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.dates input[type="date"] {
+    width: calc(50% - 10px);
+    margin-right: 160px;
+    font-size: 15px;
+    color: grey;
+}
+
+button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.startPlanning {
+    margin-top: 20px;
+}
+
+p {
+    font-size: 14px;
+    color: #888;
+}
+</style>
