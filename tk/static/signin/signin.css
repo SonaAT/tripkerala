@@ -41,6 +41,7 @@ body, html {
   }
   
   
+  input[type="text"],
   input[type="email"],
   input[type="password"] {
     width: 100%;
@@ -69,4 +70,6 @@ body, html {
     font-size: 14px;
     margin: 20px;
   }
+
+  
   

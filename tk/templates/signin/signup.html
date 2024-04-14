@@ -1,0 +1,43 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripKerala</title>
+    <link rel="stylesheet" href="{% static 'signin/signup.css'%}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <!-- Image will be added via CSS -->
+        </div>
+
+        <div class="right-side">
+            <h1 style="padding-left: 20px;">TripKerala</h1>
+            <p style="padding-left: 20px;">Explore the Hidden Gems!</p>
+            
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                    
+                {% for field in form %}
+                <p>
+                    {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                     {{ field.label_tag }} {{ field }}
+                </p>
+                {% endfor %}
+                <div style="padding-left: 100px;"><button type='submit' name="signup">Sign up</button> </div>
+                <p2>Already has an account? <a href="{% url 'signin' %}">Signin</a></p2>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -9,8 +9,9 @@
     <title>Trip Planner</title>
 </head>
 <body>
+    <a href="{% url 'signout' %}" style="position: absolute; top: 20px; right: 20px;"> Log Out</a>
     <div class="trip-planner">
-        <h1>Welcome {{ email }}!</h1>
+        <h1>Welcome {{ username }}!</h1>
         <h2>Craft your journey!</h2>
         <form id="tripForm">
             <input type="text" id="destination" style="font-weight: bold" placeholder="Where to?" required>

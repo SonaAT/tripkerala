@@ -1,23 +1,50 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import LoginForm, RegisterForm
 
-def signIn(request):
 
-    return render (request, "signin/signin.html")
 
-def welcome(request):
+def signin(request):
     if request.method=="POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user=authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            username = username.capitalize() 
+            return render (request, "welcome/welcome.html", {
+                "username": username 
+            })
+        else:
+            return render(request, "signin/signin.html", {
+                "message" : "Invalid credentials!"
+            })
+    else:
+        return render(request, "signin/signin.html")
+
         
-        username = ''
-        for char in email:
-            if char == '@':
-                break
-            elif char.isalnum():  # Check if the character is alphanumeric
-                username += char
-        username = username.capitalize()
-        
-    return render (request, "welcome/welcome.html", {
-        "email": username,
-        "password": password
+def signout(request):
+    logout(request)
+
+    return render(request, "signin/signin.html", {
+        "message" : "Logged out!"
     })
+
+def signup(request):
+    if request.method == 'GET':
+        form = RegisterForm()
+        return render(request, "signin/signup.html", {'form': form})    
+   
+    if request.method == 'POST':
+        form = RegisterForm(request.POST) 
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            login(request, user)
+            username = user.username.capitalize() 
+            return render (request, "welcome/welcome.html", {
+                "username": username 
+            })
+        else:
+            return render(request, "signin/signup.html", {'form': form})

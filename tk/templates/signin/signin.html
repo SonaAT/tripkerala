@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="{% static 'signin/signin.css'%}">
 </head>
 <body>
+    <a href="{% url 'signup' %}" style="position: absolute; top: 20px; right: 20px; color: black;"> Sign Up</a>
+    <div class="col-md-8">
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{ message.tag }}">{{ message }}</div>
+        {% endfor%} {% endif %}
+      </div>
     <div class="container">
         <div class="left-side">
             <!-- Image will be added via CSS -->
@@ -17,18 +23,20 @@
             <h1 style="padding-left: 20px;">TripKerala</h1>
             <p style="padding-left: 20px;">Explore the Hidden Gems!</p>
        
-            <form action="welcome" method="post">
+            <form action="signin" method="post">
                 {% csrf_token %}
-                <label for="email" style="font-weight: bold";>Email</label>
-                <input type="email" name="email" id="email" placeholder="Type your Email" required><br>
+                <label for="username" style="font-weight: bold";>Username</label>
+                <input type="text" name="username" id="username" placeholder="Type your Username" required><br>
                 <label for="password" style="font-weight: bold";>Password</label>
                 <input type="password" name="password" id="password" placeholder="Type your Password" required><br>
               
-                <div style="padding-left: 100px;"><button type='submit'>Sign in</button> </div>
-                <div style="padding-left: 135px;">or</div>
-                <div style="padding-left: 100px;"><button type='submit'>Sign up</button> </div>
+                <div style="padding-left: 100px;"><button type='submit' name="signin">Sign in</button> </div>
             </form>
+            {% if message %}
+                <div style="padding-left: 20px; margin-top: 20px; color: red;">{{message}}</div>
+            {% endif %}
         </div>
     </div>
+    
 </body>
 </html>
