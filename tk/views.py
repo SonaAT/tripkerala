@@ -254,5 +254,11 @@ def routing(request):
     else:
         return render(request, 'routing/routing4.html')
 
+import requests
+from django.shortcuts import render
+from django.http import JsonResponse
+
+def places(request):
+    return render(request, 'places/places.html')  # Render your template with the form
 
 

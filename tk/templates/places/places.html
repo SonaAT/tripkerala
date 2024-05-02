@@ -1,0 +1,74 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Page</title>
+    <link rel="stylesheet" href="{% static 'places/places.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="left-container">
+            <form action="{% url 'places' %}" method="post">
+                {% csrf_token %}
+                <div style="position: relative;">
+                    <input type="text" name="places[0]" placeholder="Enter Location" oninput="filterPlaces(this)">
+                    <div class="dropdown-content" id="dropdown-places"></div>
+                </div>
+                <div>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="accommodation.hotel"> Hotel</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="accommodation.apartment"> Apartment</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="accommodation.motel"> Motel</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="activity"> Activity</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="airport"> Airport</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.supermarket"> Supermarket</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.marketplace"> Marketplace</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.shopping_mall"> Shopping Mall</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.department_store"> Department Store</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.vehicle"> Vehicle</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.hobby.photo"> Photography</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.hobby.music"> Music</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.books"> Books</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.gift_and_souvenir"> Gift and Souvenir</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.stationery"> Stationery</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.clothing"> Clothing</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.health_and_beauty"> Health and Beauty</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.food_and_drink"> Food and Drink</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.convenience"> Convenience</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="commercial.gas"> Gas</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="catering.restaurant"> Restaurant</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="catering.fast_food"> Fast Food</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="catering.cafe"> Cafe</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="education"> Education</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="childcare"> Childcare</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="entertainment"> Entertainment</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="healthcare"> Healthcare</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="highway"> Highway</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="leisure"> Leisure</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="man_made"> Man Made</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="natural"> Natural</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="office"> Office</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="parking"> Parking</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="pet"> Pet</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="railway"> Railway</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="rental"> Rental</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="service"> Service</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="tourism"> Tourism</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="religion"> Religion</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="amenity"> Amenity</label><br>
+                    <label class="checkbox-label"><input type="checkbox" name="categories" value="beach"> Beach</label><br>
+                    <input type="submit" value="Submit">
+                <div>
+            </form>
+        </div>
+        <div class="right-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/folium/0.12.1/folium.js"></script>
+    <script src="{% static 'map.js' %}"></script>
+    <script src="{% static 'places/places.js'%}"></script>
+</body>
+</html>
