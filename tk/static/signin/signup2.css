@@ -72,4 +72,30 @@ button:hover {
   margin: 20px;
 }
 
+/* Style for form labels */
+label {
+  font-weight: bold;
+}
+
+/* Style for error messages */
+.errorlist {
+  color: #f00;
+  margin-bottom: 10px;
+  padding-left: 0;
+}
+
+.errorlist li {
+  list-style-type: none;
+}
+
+/* Style for 'Already has an account?' link */
+p a {
+  color: #007bff;
+  text-decoration: none;
+  padding-left: 1px;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
 

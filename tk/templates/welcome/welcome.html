@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'welcome/welcome.css'%}">
+    <link rel="stylesheet" href="{% static 'welcome/welcome2.css'%}">
     <title>Trip Planner</title>
 </head>
 <body>
@@ -14,32 +14,36 @@
         <h1>Welcome {{ username }}!</h1>
         <h2>Craft your journey!</h2>
         <form id="tripForm">
-            <input type="text" id="destination" style="font-weight: bold" placeholder="Where to?" required>
+            <select id="destination" style="font-weight: lighter" required>
+                <option value="" disabled selected>Where to?</option>
+                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                <option value="Kollam">Kollam</option>
+                <option value="Pathanamthitta">Pathanamthitta</option>
+                <option value="Alappuzha">Alappuzha</option>
+                <option value="Kottayam">Kottayam</option>
+                <option value="Idukki">Idukki</option>
+                <option value="Ernakulam">Ernakulam</option>
+                <option value="Thrissur">Thrissur</option>
+                <option value="Palakkad">Palakkad</option>
+                <option value="Malappuram">Malappuram</option>
+                <option value="Kozhikode">Kozhikode</option>
+                <option value="Wayanad">Wayanad</option>
+                <option value="Kannur">Kannur</option>
+                <option value="Kasaragod">Kasaragod</option>
+            </select>
             <div class="dates">
                 <label for="startDate" style="font-size: 13px; font-weight: bold; padding-right: 10px;">StartDate</label>
-                <input type="date" id="startDate" placeholder="Start date">
+                <input type="date" id="startDate" placeholder="Start date" min="{{ today }}">
 
             <div>
                 <label for="endDate" style="font-size: 13px; font-weight: bold; padding-right: 10px;">EndDate</label>
-                <input type="date" id="endDate" placeholder="End date">
+                <input type="date" id="endDate" placeholder="End date" min="{{ today }}">
             </div>
             </div>
             <button type="submit" class="startPlanning">Start planning</button>
-            <button type="button" onclick="invite()">+ Invite tripmates</button>
             <!-- Dropdown for friends will be appended here -->
         </form>
     </div>
 
-    <script>
-     function invite() {
-        var friendInput = prompt("Enter the email or phone number of the friend you want to invite:");
-
-        // Check if user entered something
-        if (friendInput !== null && friendInput.trim() !== "") {
-            alert("Invite sent");
-        }
-    }
-
-    </script>
 </body>
 </html>

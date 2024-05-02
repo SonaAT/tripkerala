@@ -1,0 +1,48 @@
+#places-container {
+    margin-top: 20px;
+}
+
+.place {
+    position: relative;
+}
+
+input[type="text"] {
+    width: 270px;
+    height: 30px;
+    margin-right: 15px;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    width: 248px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.add-place-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}

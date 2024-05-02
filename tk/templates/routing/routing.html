@@ -1,0 +1,21 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map Places</title>
+<link rel="stylesheet" href="{% static 'routing/routing2.css'%}">
+</head>
+<body>
+<h1>Select Destinations</h1>
+<div id="places-container">
+    <div class="place">
+        <input type="text" name="place[]" placeholder="Enter a place" oninput="filterPlaces(this)">
+        <div class="dropdown-content" id="dropdown-places"></div>
+        <button class="add-place-btn" onclick="addPlace(this)">+</button>
+    </div>
+</div>
+<script src="{% static 'routing/routing2.js'%}"></script>
+</body>
+</html>

@@ -205,7 +205,7 @@ def routing(request):
             coordinates = get_coordinates(places)
             print(coordinates)
             # Create a Folium map centered at Kerala, India
-            kerala_map = folium.Map(location=coordinates[0]['location'], zoom_start=10)
+            kerala_map = folium.Map(location=[10.8505, 76.2711], zoom_start=7)
 
             # Customize the map as needed (add markers, etc.)
             # For example, add markers at each location
@@ -233,10 +233,7 @@ def routing(request):
             print(shortest_path)
             
             optimal_route_str = ""
-            if len(places)==1:
-                optimal_route_str += f"{1}. {places[0]}\n"
-
-            elif len(shortest_path[0])==1:
+            if len(shortest_path[0])==1:
                 for i, edge in enumerate(shortest_path[0]):
                     optimal_route_str += f"{1}. {places[edge[0]]}\n"
                     optimal_route_str += f"{2}. {places[edge[0]+1]}\n"
