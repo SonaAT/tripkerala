@@ -41,7 +41,9 @@ function filterPlaces(input) {
         });
 }
 
+let placeCounter = 1;
 function addPlace(btn) {
+    event.preventDefault();
     var placeDiv = btn.parentElement;
     var allPlaces = document.querySelectorAll('.place');
     if (placeDiv === allPlaces[allPlaces.length - 1]) {
@@ -50,7 +52,7 @@ function addPlace(btn) {
 
         var newPlaceInput = document.createElement('input');
         newPlaceInput.setAttribute('type', 'text');
-        newPlaceInput.setAttribute('name', 'place[]');
+        newPlaceInput.setAttribute('name', `places[${placeCounter++}]`); // Corrected name attribute
         newPlaceInput.setAttribute('placeholder', 'Enter a place');
         newPlaceInput.setAttribute('oninput', 'filterPlaces(this)');
 
@@ -70,3 +72,5 @@ function addPlace(btn) {
         placeDiv.parentNode.insertBefore(newPlaceDiv, placeDiv.nextSibling);
     }
 }
+
+

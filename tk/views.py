@@ -104,6 +104,8 @@ def signin(request):
         user=authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            # Store user-specific data in session
+            request.session['user_id'] = user.id
             username = username.capitalize()
             today = date.today().strftime("%Y-%m-%d")
             return render (request, "welcome/welcome.html", {
@@ -121,7 +123,8 @@ def signin(request):
         
 def signout(request):
     logout(request)
-
+    # Clear user-specific data from session on logout
+    request.session.clear()
     return render(request, "signin/signin.html", {
         "message" : "Logged out!"
     })
@@ -138,6 +141,8 @@ def signup(request):
             user = form.save(commit=False)
             user.save()
             login(request, user)
+            # Store user-specific data in session
+            request.session['user_id'] = user.id
             username = user.username.capitalize() 
             today = date.today().strftime("%Y-%m-%d")
             return render (request, "welcome/welcome.html", {
@@ -151,20 +156,29 @@ def signup(request):
 def get_coordinates(places):
     coordinates = []
     for place in places:
+        placess = place[:2]
+        print(placess)
         # Construct the API request URL for each place
-        url = f"https://api.geoapify.com/v1/geocode/search?text={place}&filter=countrycode:in&bias=countrycode:in&format=json&apiKey=82edecf6aaae4fdfb3c5ddb527d7485a"
+        url = f"https://api.geoapify.com/v1/geocode/autocomplete?text={placess}&filter=countrycode:in&bias=countrycode:in&format=json&apiKey=49503ab6c1784c298a09120883307386"
         
         # Send the request to the Geocoding API
         response = requests.get(url)
         data = response.json()
 
+        place = ', '.join(place)
+
         # Extract longitude and latitude values from the response
         if 'results' in data and len(data['results']) > 0:
-            lon = data['results'][0]['lon']
-            lat = data['results'][0]['lat']
+            for i in range(len(data['results'])):
+                if data['results'][i]['state']=="Kerala" and data['results'][i]['formatted']==place:
+                    break
+            lon = data['results'][i]['lon']
+            lat = data['results'][i]['lat']
             coordinates.append({'location': [lat, lon]})
+            print(data['results'][i]['formatted'])
     
     return coordinates
+
 
 def get_distance_matrix(coordinates):
     url = "https://api.geoapify.com/v1/routematrix?apiKey=82edecf6aaae4fdfb3c5ddb527d7485a"
@@ -185,35 +199,28 @@ def get_distance_matrix(coordinates):
         return resp.json()
     except requests.exceptions.HTTPError as e:
         return {"error": e.response.text}
-    
+
 
 
 def routing(request):
     if request.method == 'POST':
         if 'route_button' in request.POST:
             # Handle form submission
-            places=[]
+            places = []
             index = 0
             while f'places[{index}]' in request.POST:
                 # Assuming 'places' is the name of the input field in your form
-                place = request.POST[f'places[{index}]']
-                places.append(place)
+                place_string = request.POST[f'places[{index}]']
+                # Split the string by commas and strip extra whitespace from each element
+                place_list = [item.strip() for item in place_string.split(',')]
+                places.append(place_list)
                 index += 1
             
             print(places)
             # Get coordinates for each place
             coordinates = get_coordinates(places)
             print(coordinates)
-            # Create a Folium map centered at Kerala, India
-            kerala_map = folium.Map(location=coordinates[0]['location'], zoom_start=10)
-
-            # Customize the map as needed (add markers, etc.)
-            # For example, add markers at each location
-            for coordinate in coordinates:
-                folium.Marker(location=coordinate['location']).add_to(kerala_map)
-
-            # Render the Folium map to HTML
-            map_html = kerala_map._repr_html_()
+        
 
             distance_matrix = get_distance_matrix(coordinates)
             distances = []
@@ -231,6 +238,9 @@ def routing(request):
             ant_colony = AntColony(distances, 10, 5, 100, 0.95, alpha=1, beta=1)
             shortest_path = ant_colony.run()
             print(shortest_path)
+
+            # Convert each sublist to a string joined by commas
+            places = [', '.join(sublist) for sublist in places]
             
             optimal_route_str = ""
             if len(places)==1:
@@ -248,17 +258,99 @@ def routing(request):
             total_distance_str=str(shortest_path[1])+" m"
             print(optimal_route_str)
             print(total_distance_str)
-
+        
+            first_list = [shortest_path[0][0]]
+            print(first_list)
             # Pass the formatted output to the template
-            return render(request, 'routing/routing4.html', {'optimal_route': optimal_route_str, 'total_distance': total_distance_str, 'map_html':map_html})
+            return render(request, 'routing/routing.html', {'optimal_route': optimal_route_str, 'total_distance': total_distance_str, 'coordinates':coordinates, 'names':places, 'coord_list':first_list})
     else:
-        return render(request, 'routing/routing4.html')
+        return render(request, 'routing/routing.html')
 
-import requests
-from django.shortcuts import render
-from django.http import JsonResponse
+
+def places_coordinates(place):
+
+    places = place[:2]
+    print(places)
+        # Construct the API request URL for each place
+    url = f"https://api.geoapify.com/v1/geocode/autocomplete?text={places}&format=json&apiKey=49503ab6c1784c298a09120883307386"
+        
+        # Send the request to the Geocoding API
+    response = requests.get(url)
+    data = response.json()
+    #print(data)
+
+    place = ', '.join(place)
+    # Extract longitude and latitude values from the response
+    if 'results' in data and len(data['results']) > 0:
+        for i in range(len(data['results'])):
+            if data['results'][i]['state']=="Kerala" and data['results'][i]['formatted']==place:
+                break
+        lon = data['results'][i]['lon']
+        lat = data['results'][i]['lat']
+        coordinates=[lon, lat]
+    print(coordinates)
+    return coordinates
+
+
+def get_isolineID(coordinates):
+    
+    url = f"https://api.geoapify.com/v1/isoline?lat={coordinates[1]}&lon={coordinates[0]}&type=distance&mode=walk&range=5000&traffic=approximated&apiKey=49503ab6c1784c298a09120883307386"
+          
+    response = requests.get(url)
+    data=response.json()
+
+    isoline_id=data['properties']['id']
+    return isoline_id
+
 
 def places(request):
-    return render(request, 'places/places.html')  # Render your template with the form
+    if request.method == 'POST':
+        if 'places-button' in request.POST:
+            input_string = request.POST.get('places[0]', '')
+            # Split the input string by commas
+            place= [item.strip() for item in input_string.split(',')]
+
+            # Now place_list contains the elements as you wanted
+            print(place)
+
+            checked_categories = request.POST.getlist('categories')
+            checked_categories_str = ','.join(checked_categories)
+            #print(checked_categories_str)
+
+            # Get coordinates for each place
+            coordinates = places_coordinates(place)
+            #print(coordinates)
+            # Create a Folium map centered at Kerala, India
+            '''isoline_id=get_isolineID(coordinates)
+            print(isoline_id)
+
+            url = f"https://api.geoapify.com/v2/places?categories={checked_categories_str}&filter=geometry:{isoline_id}&bias=proximity:{coordinates[0]},{coordinates[1]}&limit=20&apiKey=49503ab6c1784c298a09120883307386"
+            '''
+            url = f"https://api.geoapify.com/v2/places?categories={checked_categories_str}&filter=circle:{coordinates[0]},{coordinates[1]},3000&bias=proximity:{coordinates[0]},{coordinates[1]}&limit=20&apiKey=49503ab6c1784c298a09120883307386"
+            response = requests.get(url)
+            data = response.json()
+
+            #print(data)
+
+            markers_data = []
+            for feature in data.get('features', []):
+                name = feature.get('properties', {}).get('name', 'Unnamed Place')
+                lat = feature['geometry']['coordinates'][1]
+                lon = feature['geometry']['coordinates'][0]
+                categories = ', '.join(feature.get('properties', {}).get('categories', []))
+                address = feature.get('properties', {}).get('formatted', 'No address available')
+                marker = {'name': name, 'lat': lat, 'lon': lon, 'categories': categories, 'address': address}
+                markers_data.append(marker)
+            
+            coord=[coordinates[1],coordinates[0]]
+            print(markers_data)
+            place = ', '.join(place)
+            # Render the map template with the markers data
+            message="Explore Further: Click on the Map to Discover Nearby Locations!"
+            return render(request, 'places/places.html', {'markers_data': markers_data, 'coordinates': coord, 'place': place, 'message':message})
+    else:
+        return render(request, 'places/places.html')
 
 
+def welcome(request):
+    return render(request, 'welcome/welcome.html')

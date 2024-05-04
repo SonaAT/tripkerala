@@ -4,7 +4,7 @@ function filterPlaces(input) {
     dropdown.innerHTML = '';
 
     // Make a request to the Geoapify Places Autocomplete API
-    const apiKey = '82edecf6aaae4fdfb3c5ddb527d7485a';
+    const apiKey = '49503ab6c1784c298a09120883307386';
     const apiUrl = `https://api.geoapify.com/v1/geocode/autocomplete?text=${inputValue}&filter=countrycode:in&filter=rect:75.0,8.0,78.0,13.0&apiKey=${apiKey}`;
     
     var requestOptions = {
@@ -40,37 +40,3 @@ function filterPlaces(input) {
             dropdown.style.display = 'none';
         });
 }
-
-let placeCounter = 1;
-function addPlace(btn) {
-    event.preventDefault();
-    var placeDiv = btn.parentElement;
-    var allPlaces = document.querySelectorAll('.place');
-    if (placeDiv === allPlaces[allPlaces.length - 1]) {
-        var newPlaceDiv = document.createElement('div');
-        newPlaceDiv.classList.add('place');
-
-        var newPlaceInput = document.createElement('input');
-        newPlaceInput.setAttribute('type', 'text');
-        newPlaceInput.setAttribute('name', `places[${placeCounter++}]`); // Corrected name attribute
-        newPlaceInput.setAttribute('placeholder', 'Enter a place');
-        newPlaceInput.setAttribute('oninput', 'filterPlaces(this)');
-
-        var dropdownContent = document.createElement('div');
-        dropdownContent.classList.add('dropdown-content');
-        dropdownContent.setAttribute('id', 'dropdown-places');
-
-        var addPlaceBtn = document.createElement('button');
-        addPlaceBtn.classList.add('add-place-btn');
-        addPlaceBtn.textContent = '+';
-        addPlaceBtn.setAttribute('onclick', 'addPlace(this)');
-
-        newPlaceDiv.appendChild(newPlaceInput);
-        newPlaceDiv.appendChild(dropdownContent);
-        newPlaceDiv.appendChild(addPlaceBtn);
-
-        placeDiv.parentNode.insertBefore(newPlaceDiv, placeDiv.nextSibling);
-    }
-}
-
-
