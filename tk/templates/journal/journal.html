@@ -1,0 +1,99 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal App</title>
+  
+  <link rel="stylesheet" href="{% static 'journal/journal.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+  <nav>
+    <h2>TripKerala</h2>
+  </nav>
+<div class="container">
+    <br>
+    <h1>MY JOURNAL</h1>
+    &nbsp;
+    <div id="dateDisplay">
+      <button type="button" id="date"><i class="fas fa-calendar-days"></i></button>
+      <span id="currentDate"></span>
+    </div>
+    &nbsp;
+    <div class="side-content">
+      <form method="post" action="{% url 'savejournal' %}" id="journalForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="notebook-page">
+            <pre><textarea id="journalEntry" placeholder="Write your journal entry here..." name="journal_text"></textarea></pre>
+        </div>
+        <div id="fileInputsContainer">
+            <div class="btn">
+                <input type="file" name="journal_images_1" multiple>
+            </div>
+        </div>
+        <button type="button" id="addFileInput">Add Another Image</button>
+        <button type="submit" id="savebtn">Save</button>
+    </form>
+    </div>
+    <div id="entries"></div>
+    {{n}}
+    <div id="entries1" class="previous-entries">
+        &nbsp;
+        <h1><br>JOURNAL ENTRIES</h1>
+        &nbsp;
+        {% for entry in journalData %}
+            &nbsp;
+            <div class="journal-entry">
+                <p>Date: {{ entry.created_at }}</p>
+                <div class="flex-box" style="white-space: pre-wrap;">
+                    <p>{{ entry.journal_text }}</p>
+                    <div class="im">
+                        {% for image in entry.images.all %}
+                            <img src="media/{{image.image}}"/>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentDateDisplay = document.getElementById('currentDate');
+
+      // Function to update the displayed date
+      function updateDate() {
+        const currentDate = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        currentDateDisplay.textContent = currentDate.toLocaleDateString('en-US', options);
+      }
+
+      // Display current date when the page loads
+      updateDate();
+
+      // Update the date every second
+      setInterval(updateDate, 1000);
+      
+      
+    });
+
+  </script>
+  <script>
+    document.getElementById('addFileInput').addEventListener('click', function() {
+        var fileInputsContainer = document.getElementById('fileInputsContainer');
+        var inputCount = fileInputsContainer.getElementsByTagName('input').length;
+        var div = document.createElement('div');
+        div.className = 'btn';
+        var fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.name = 'journal_images_' + (inputCount + 1);
+        fileInput.multiple = true;
+        div.appendChild(fileInput);
+        fileInputsContainer.appendChild(div);
+    });
+</script>
+</body>
+</html>

@@ -9,9 +9,9 @@
 </head>
 <body>
 
-<div class="top-panel">
+<div class="top-panel"> 
   <div class="left-buttons">
-    <a href="{% url 'places' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Journal</a>
+    <a href="{% url 'print_hello' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Journal</a>
     <a href="{% url 'routing' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Bucket list</a>
     <a href="{% url 'places' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Explore</a>
     <a href="{% url 'routing' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Optimal route</a>
@@ -21,7 +21,7 @@
       <button class="dropbtn" style="font-size:large; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">User</button>
       <div id="dropdown-content" class="dropdown-content">
         <a href="{% url 'places' %}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Profile</a>
-        <a href="{% url 'routing' %}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Logout</a>
+        <a href="{% url 'signout' %}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Logout</a>
       </div>
     </div>
   </div>

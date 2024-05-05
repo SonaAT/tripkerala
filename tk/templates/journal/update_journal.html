@@ -1,0 +1,9 @@
+{% extends 'journal/journal.html' %}
+{% block content %}
+    <h1>Edit Journal Entry</h1>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="journal_text">{{ journal_entry.journal_text }}</textarea>
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

@@ -11,6 +11,12 @@ import json
 import numpy as np
 import random as rn
 from numpy.random import choice as np_choice
+from tk.models import Journal,JournalImage
+from datetime import datetime 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.cache import never_cache
+
 
 
 class AntColony(object):
@@ -96,7 +102,7 @@ class AntColony(object):
 
 
 
-
+@never_cache
 def signin(request):
     if request.method=="POST":
         username = request.POST["username"]
@@ -108,10 +114,7 @@ def signin(request):
             request.session['user_id'] = user.id
             username = username.capitalize()
             today = date.today().strftime("%Y-%m-%d")
-            return render (request, "welcome/welcome.html", {
-                "username": username ,
-                "today": today
-            })
+            return redirect("welcome")
         
         else:
             return render(request, "signin/signin.html", {
@@ -354,3 +357,33 @@ def places(request):
 
 def welcome(request):
     return render(request, 'welcome/welcome.html')
+
+@login_required
+def print_hello(request):
+    # Get all journal entries for the current user
+    journalData = Journal.objects.filter(user=request.user).prefetch_related('images')
+
+    # Pass the journal entries along with the response
+    return render(request, 'journal/journal.html', {'journalData': journalData})
+    
+@login_required
+def saveJournal(request):
+    if request.method == 'POST':
+        jou_text = request.POST.get('journal_text')
+        user = request.user  # Get the currently logged-in user
+        journal_date = datetime.now().date()
+
+        # Create the journal entry associated with the logged-in user
+        journal_entry = Journal.objects.create(user=user, journal_text=jou_text, created_at=journal_date)
+        
+        # Handle multiple image uploads
+        for i in range(1, len(request.FILES) + 1):
+            if f'journal_images_{i}' in request.FILES:
+                image = request.FILES[f'journal_images_{i}']
+                JournalImage.objects.create(journal=journal_entry, image=image)
+        
+        return redirect('print_hello')
+    
+    return render(request, 'journal/journal.html')
+
+
