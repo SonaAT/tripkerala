@@ -94,11 +94,79 @@
 </div>
 
 <!-- Bottom container -->
-<div class="bottom-container">
-<!-- Bottom container content -->
+<div class="bottom-container" style="margin-top: 20px; margin-left: 65px; margin-bottom: 20px;">
+  <h1 style="margin-left: 0%;">TripKerala</h1> <!-- Removed margin-bottom and margin-top inline styles -->
+  <h2 style="margin-left: 0%; margin-top: 0px; font-size: x-large;">Discover the Essence of TripKerala</h2>
+  <div style="text-align: center;">
+    <p style="padding-left: 70px;"><img src="{% static 'bucket/journal.jpg' %}" alt="Journal Icon"> Embark on a journey of self-discovery with our Journal feature, where you can chronicle your adventures and experiences.</p>
+    <p style="padding-left: 70px;"><img class="bucketlist-icon" src="{% static 'bucket/bucket.jpg' %}" alt="Bucket List Icon"> Curate your ultimate travel aspirations with our Bucket List, ensuring every destination dream becomes a reality.</p>
+    <p style="padding-left: 70px;"><img class="route-icon" src="{% static 'bucket/routing.jpg' %}" alt="Route Icon"> Navigate seamlessly through Kerala's charm with our Optimal Route feature, backed by real-time traffic data for a hassle-free journey.</p>
+    <p style="padding-left: 70px;"><img src="{% static 'bucket/user.jpg' %}" alt="User Icon"> Experience an efficient user interface designed to elevate your travel planning and exploration.</p>
+    <p style="padding-left: 70px;"><img src="{% static 'bucket/login.jpg' %}" alt="Security Icon"> Rest easy with our secure User Authentication, ensuring your data and experiences remain protected throughout your TripKerala journey.</p>
+  </div>
 </div>
 
 <!-- JavaScript for slideshow -->
 <script src="{% static 'welcome/welcome2.js' %}"></script>
+
+<style>
+  .bottom-container {
+    width: 88%;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    text-align: center; /* Changed text-align to left */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .bottom-container h1 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 42px;
+    margin-bottom: 5px; /* Adjusted margin-bottom */
+    color: #333;
+    margin-top: 0; /* Removed margin-top */
+  }
+
+  .bottom-container h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .bottom-container p {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Changed justify-content to flex-start */
+  }
+
+  .bottom-container p img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    vertical-align: middle;
+  }
+
+  .bottom-container p:hover {
+    color: #ff6f61;
+  }
+
+  .bucketlist-icon, .route-icon {
+    width: 60px;
+    height: 60px;
+  }
+</style>
+
 </body>
 </html>
