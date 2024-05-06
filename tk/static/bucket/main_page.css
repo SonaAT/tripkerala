@@ -1,0 +1,87 @@
+/* main_page.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #222;
+    padding: 10px;
+    position: fixed; /* Position navbar absolutely */
+    top: 0; /* Position at the top of the viewport */
+    left: 0; /* Align with the left edge of the viewport */
+    right: 0;
+    width: 100%; /* Take the full width of the viewport */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Ensure navbar is above other content */
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Space items evenly */
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #444;
+}
+
+.navbar-right {
+    /* You can add styles here for the right side of the navbar */
+    display: flex; /* Use flexbox for right side */
+    align-items: center; /* Center items vertically */
+    margin-right: 20px;
+}
+
+
+h1 {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.bucket-list {
+    margin-top: 20px;
+}
+
+.bucket-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bucket-list li {
+    margin-bottom: 10px;
+}
+
+.bucket-list li span {
+    margin-right: 10px;
+}
+
+.bucket-list li button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bucket-list li button:hover {
+    background-color: #c82333;
+}

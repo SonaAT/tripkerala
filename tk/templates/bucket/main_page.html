@@ -1,0 +1,64 @@
+<!-- main_page.html -->
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <!-- Include any CSS files here -->
+    <link rel="stylesheet" href="{% static 'bucket/main_page.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div style="font-family:Arial, Helvetica, sans-serif ; color: white; font-size: x-large; font-weight: bold; padding-left: 100px;">TripKerala</div>
+        </div>
+        <div class="navbar-right">
+            <a href="{% url 'welcome' %}" class="nav-link" style="font-family:Arial, Helvetica, sans-serif;">Home</a>
+            <a href="{% url 'signout' %}" class="nav-link" style="font-family:Arial, Helvetica, sans-serif;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-left: 34%;">
+        <h1>Bucket List</h1>
+        <a href="{% url 'add_trip' %}"><button>Add a Trip</button></a>
+        <div class="bucket-list">
+            {% if bucket_list %}
+                <ul>
+                    {% for item in bucket_list %}
+                        <li>
+                            <div style="font-family: Arial, Helvetica, sans-serif; color: black; font-size: x-large;">{{ item.trip_name }}</div>
+                            <div style="font-family: Arial, Helvetica, sans-serif; color: rgb(131, 8, 8); font-size: large;">{{ item.destination_city }}</div>
+                            <span style="font-family: Arial, Helvetica, sans-serif; color: rgb(155, 154, 154); font-size: medium;">{{ item.start_date }} -</span>
+                            <span style="font-family: Arial, Helvetica, sans-serif; color: rgb(155, 154, 154); font-size: medium;">{{ item.end_date }}</span>
+
+                            <form action="{% url 'delete_trip' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" style="margin-top: 10px;">Delete</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No trips added yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <style>
+        .bucket-list {
+            list-style-type: none;
+            padding: 0;
+            width: 50%;
+        }
+        .bucket-list li {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    </style>
+    <!-- Include any JS files here -->
+    <script src="{% static 'bucket/main_page.js' %}"></script>
+</body>
+</html>

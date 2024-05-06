@@ -9,3 +9,15 @@ class Journal(models.Model):
 class JournalImage(models.Model):
     journal = models.ForeignKey(Journal, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='journal_images/')
+
+
+class BucketListItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    trip_name = models.CharField(max_length=100, blank=True)
+    destination_city = models.CharField(max_length=100)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return self.destination_city
+

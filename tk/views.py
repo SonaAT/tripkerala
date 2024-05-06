@@ -16,7 +16,8 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import never_cache
-
+from .models import BucketListItem
+from .forms import BucketListItemForm
 
 
 class AntColony(object):
@@ -387,3 +388,26 @@ def saveJournal(request):
     return render(request, 'journal/journal.html')
 
 
+def add_trip(request):
+    if request.method == 'POST':
+        form = BucketListItemForm(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            trip = form.save(commit=False)
+            trip.user = request.user
+            trip.save()
+            return redirect('bucket')  # Redirect to the main page
+    else:
+        form = BucketListItemForm()
+    return render(request, 'bucket/add_trip.html', {'form': form})
+
+@login_required
+def main_page(request):
+    bucket_list = BucketListItem.objects.filter(user=request.user)
+    return render(request, 'bucket/main_page.html', {'bucket_list': bucket_list})
+
+def delete_trip(request, trip_id):
+    trip = get_object_or_404(BucketListItem, pk=trip_id)
+    if request.method == 'POST':
+        trip.delete()
+    return redirect('bucket')

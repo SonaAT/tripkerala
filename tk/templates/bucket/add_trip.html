@@ -1,0 +1,41 @@
+<!-- add_trip.html -->
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Trip</title>
+    <!-- Include any CSS files here -->
+    <link rel="stylesheet" href="{% static 'bucket/add_trip.css' %}">
+    <script src="{% static 'bucket/date_picker.js' %}"></script>
+</head>
+<body>
+    <div class="container" style="padding-left: 35%;">
+        <h1 style="margin-left: 135px; margin-top: 100px;">Add Trip</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_trip_name">Trip Name:</label>
+                {{ form.trip_name }}
+            </div>
+            <div class="form-group">
+                <label for="id_destination_city">Destination City:</label>
+                {{ form.destination_city }}
+            </div>
+            <div class="form-group">
+                <label for="id_start_date">Start Date:</label>
+                {{ form.start_date }}
+            </div>
+            <div class="form-group">
+                <label for="id_end_date">End Date:</label>
+                {{ form.end_date }}
+            </div>
+            <button type="submit" name="save_btn" style="margin-left: 180px;">Save</button>
+        </form>
+        <a href="{% url 'bucket' %}" style="margin-left: 170px;"><button>Go Back</button></a>
+    </div>
+        <!-- Include any JS files here -->
+        <script src="{% static 'bucket/add_trip.js' %}"></script>
+</body>
+</html>
