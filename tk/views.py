@@ -387,6 +387,18 @@ def saveJournal(request):
     
     return render(request, 'journal/journal.html')
 
+@login_required
+def deleteJournalEntry(request, entry_id):
+    # Retrieve the journal entry
+    journal_entry = Journal.objects.get(pk=entry_id)
+    
+    # Check if the journal entry belongs to the current user
+    if journal_entry.user == request.user:
+        # Delete the journal entry
+        journal_entry.delete()
+    
+    return redirect('print_hello')
+
 
 def add_trip(request):
     if request.method == 'POST':

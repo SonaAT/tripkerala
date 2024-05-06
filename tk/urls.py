@@ -15,7 +15,8 @@ urlpatterns=[
     path('savejournal',views.saveJournal,name="savejournal"),
     path('bucket', views.main_page, name='bucket'),  # URL for the main page
     path('add_trip', views.add_trip, name='add_trip'),  # URL for adding a trip
-    path('delete_trip/<int:trip_id>', views.delete_trip, name='delete_trip')
+    path('delete_trip/<int:trip_id>', views.delete_trip, name='delete_trip'),
+    path('journal/delete/<int:entry_id>/', views.deleteJournalEntry, name="delete_journal_entry")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

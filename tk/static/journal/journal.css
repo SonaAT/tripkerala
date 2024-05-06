@@ -191,3 +191,17 @@
     pre{
       white-space: pre;
     }
+
+    .delete-btn {
+      background-color: #ff6347;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+      background-color: black;
+  }
+  
