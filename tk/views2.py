@@ -15,6 +15,7 @@ from tk.models import Journal,JournalImage
 from datetime import datetime 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.cache import never_cache
 
 
 
@@ -101,7 +102,7 @@ class AntColony(object):
 
 
 
-
+@never_cache
 def signin(request):
     if request.method=="POST":
         username = request.POST["username"]

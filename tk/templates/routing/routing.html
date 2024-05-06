@@ -12,9 +12,28 @@
 <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 </head>
 <body>
-<div class="container">
+<nav style="background-color: #222;
+padding: 10px;
+position: fixed; /* Position navbar absolutely */
+top: 0; /* Position at the top of the viewport */
+left: 0; /* Align with the left edge of the viewport */
+right: 0;
+width: 100%; /* Take the full width of the viewport */
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+z-index: 1; /* Ensure navbar is above other content */
+display: flex; /* Use flexbox */
+justify-content: space-between; /* Space items evenly */">
+    <div class="navbar-left">
+        <div style="font-family:Arial, Helvetica, sans-serif ; color: white; font-size: x-large; font-weight: bold; padding-left: 100px;">TripKerala</div>
+    </div>
+    <div class="navbar-right">
+        <a href="{% url 'welcome' %}" class="nav-link" style="font-family:Arial, Helvetica, sans-serif; color: white; padding-right: 20px;">Home</a>
+        <a href="{% url 'signout' %}" class="nav-link" style="font-family:Arial, Helvetica, sans-serif; color: white; padding-right: 30px;">Logout</a>
+    </div>
+</nav>
+<div class="container" style="padding-top: 70px;">
     <div class="left">
-        <h1>Select Destinations</h1>
+        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: xx-large;">Select Destinations</h1>
         <form method="post" action="">
             {% csrf_token %}
             <div id="places-container">
@@ -40,7 +59,7 @@
             </div>
         {% endif %}
     </div>
-    <div class="right">
+    <div class="right" >
         <div id="map-container"></div>
     </div>
 </div>

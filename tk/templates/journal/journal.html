@@ -11,7 +11,13 @@
 </head>
 <body>
   <nav>
-    <h2>TripKerala</h2>
+    <div class="navbar-left">
+      <div style="font-family:Arial, Helvetica, sans-serif ; color: white; font-size: x-large; font-weight: bold; padding-left: 20px;">TripKerala</div>
+  </div>
+  <div class="navbar-right">
+      <a href="{% url 'welcome' %}" class="nav-link" style="font-family:Arial, Helvetica, sans-serif; color: white; padding-right: 20px;">Home</a>
+      <a href="{% url 'signout' %}" class="nav-link" style="font-family:Arial, Helvetica, sans-serif; color: white;">Logout</a>
+  </div>
   </nav>
 <div class="container">
     <br>

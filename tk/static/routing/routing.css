@@ -1,6 +1,5 @@
 .container {
     display: flex;
-    height: 100vh; /* Set the height of the container to fill the viewport */
 }
 
 .left {
@@ -11,10 +10,12 @@
 }
 
 .right {
-    /* Styles for the right container */
-    flex: 1; /* Allow the right container to grow and fill available space */
+    flex: 1;
+    width: 200px; /* Or specify a fixed width */
+    height: 550px; /* Or specify a fixed height */
+    /* Other styles as needed */
 }
-
+ 
 #map-container {
     /* Styles for the map container */
     width: 100%; /* Ensure the map container fills the entire right container */
@@ -92,3 +93,4 @@ button[type="submit"] {
 .result {
     margin-top: 5px; /* Adjust this value as needed */
 }
+

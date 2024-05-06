@@ -5,25 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TripKerala</title>
-    <link rel="stylesheet" href="{% static 'welcome/welcome2.css' %}">
+    <link rel="stylesheet" href="{% static 'welcome/welcome3.css' %}">
 </head>
 <body>
 
 <div class="top-panel"> 
-  <div class="left-buttons">
+  <div class="left-buttons" style="padding-left: 30px;">
     <a href="{% url 'print_hello' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Journal</a>
     <a href="{% url 'routing' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Bucket list</a>
     <a href="{% url 'places' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Explore</a>
     <a href="{% url 'routing' %}" style="font-size: large; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Optimal route</a>
   </div>
   <div class="right-buttons">
-    <div class="dropdown">
-      <button class="dropbtn" style="font-size:large; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">User</button>
-      <div id="dropdown-content" class="dropdown-content">
-        <a href="{% url 'places' %}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Profile</a>
-        <a href="{% url 'signout' %}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Logout</a>
-      </div>
-    </div>
+    <a href="{% url 'signout' %}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: white;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='white'">Logout</a>
   </div>
 </div>
 
